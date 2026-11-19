@@ -1,0 +1,170 @@
+/* Ansa assistant: a terminal and the note it writes. The note card takes the
+   host page's color tokens when it has them (they inherit into the shadow
+   root); the fallbacks are the light values. The terminal is dark in both. */
+.aa {
+  .ss-stage {
+    --a-fg: var(--fg, #18181d);
+    --a-note: var(--note, #fff8e1);
+    --a-note-line: var(--note-line, #f1e2a8);
+    --a-note-fg: var(--note-fg, #7a5a00);
+    --ss-font: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --ss-mono: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
+    --ss-term-bg: #16151f;
+    --ss-term-dim: #7c7a92;
+    --ss-term-ok: #6ee7b7;
+  }
+
+  .aa-term {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 480px;
+    height: 336px;
+    box-shadow: 0 0 0 1px #ffffff1f, 0 24px 60px -24px var(--shadow, #221f5c66);
+  }
+  .aa-term .ss-term {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 14px 16px 14px;
+    font-size: 12.5px;
+    line-height: 20px;
+    color: #dcdbe8;
+  }
+  .aa-you {
+    display: flex;
+    gap: 8px;
+    margin: 0 -8px 10px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    background: #ffffff10;
+    color: #f4f3fb;
+    white-space: normal;
+  }
+  .aa-you > span:last-child {
+    min-width: 0;
+    white-space: normal;
+  }
+  .aa-you__sigil {
+    flex: none;
+    color: #7c7a92;
+  }
+  .aa-tool,
+  .aa-result {
+    display: flex;
+    gap: 8px;
+  }
+  .aa-tool {
+    align-items: center;
+    padding-top: 6px;
+  }
+  .aa-tool__server {
+    color: #b3acff;
+  }
+  .aa-tool__dot {
+    flex: none;
+    width: 7px;
+    height: 7px;
+    margin: 0 1px;
+    border-radius: 50%;
+    background: #dcdbe8;
+    animation: aa-blink 0.9s ease-in-out infinite;
+    transition: background-color 0.2s ease;
+  }
+  .aa-tool__dot[data-done] {
+    background: var(--ss-term-ok);
+    animation: none;
+  }
+  .aa-result {
+    padding-left: 17px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .aa-result[data-show] {
+    opacity: 1;
+  }
+  .aa-input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    margin-top: auto;
+    padding: 0 10px;
+    border: 1px solid #ffffff24;
+    border-radius: 8px;
+  }
+
+  /* The note in Ansa: over the terminal's lower right edge, half outside */
+  .aa-note {
+    position: absolute;
+    top: 288px;
+    left: 150px;
+    width: 330px;
+    padding: 14px 16px 16px;
+    border: 1px solid var(--a-note-line);
+    border-radius: 12px;
+    background: var(--a-note);
+    box-shadow: 0 14px 32px -8px #0000004d;
+    font-size: 13.5px;
+    color: var(--a-fg);
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.35s ease, transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .aa-note[data-show] {
+    opacity: 1;
+    transform: none;
+  }
+  .aa-note__head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 8px;
+  }
+  .aa-note__head > svg {
+    flex: none;
+    border-radius: 5px;
+  }
+  .aa-note__title {
+    flex: 1;
+    white-space: nowrap;
+    font-weight: 650;
+  }
+  .aa-note__meta {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex: none;
+    font-size: 12px;
+    color: var(--a-note-fg);
+  }
+  .aa-note__text {
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  [data-layout='compact'] {
+    .aa-term {
+      width: 330px;
+      height: 372px;
+    }
+    .aa-term .ss-term {
+      padding: 12px;
+      font-size: 12px;
+    }
+    .aa-note {
+      top: 330px;
+      left: 30px;
+      width: 300px;
+    }
+    .aa-note__meta {
+      font-size: 11.5px;
+    }
+  }
+}
+
+@keyframes aa-blink {
+  50% {
+    opacity: 0.25;
+  }
+}

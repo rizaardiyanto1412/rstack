@@ -1,0 +1,52 @@
+/* scenic-landing: the hero frame, its sprites and their motion, then the same
+   world carried down the page. Taken from helpansa.com; adapt the file names,
+   the percent positions (from the art agent's placement file) and the token
+   names (--navy, --soft, --line) to the site.
+
+   Markup:
+   <div class="hero-art">
+     <div class="hero-sky" aria-hidden="true"><div class="hero-sky-frame">
+       <i class="fly fly-large"></i> ... one <i> per object ...
+     </div></div>
+     <section class="hero"> ... headline, buttons, demo ... </section>
+   </div>
+
+   .hero-art needs: position: relative; isolation: isolate.
+   A dark, full-width band needs: position: relative; isolation: isolate; overflow: hidden. */
+
+:root{--sky:url(/assets/hero/sky.webp);--balloon-large:url(/assets/hero/balloon-large.webp);--balloon-small:url(/assets/hero/balloon-small.webp);--balloon-tiny:url(/assets/hero/balloon-tiny.webp);--plane:url(/assets/hero/plane.webp)}
+.hero-sky{position:absolute;z-index:-1;inset:0 0 auto;height:clamp(600px,56.25vw,941px);max-height:100%;overflow:hidden;container-type:size;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+.hero-sky-frame{position:absolute;bottom:0;left:50%;width:max(100cqw,177.78cqh);aspect-ratio:16/9;translate:-50% 0;background:var(--sky) center/cover no-repeat}
+.fly{position:absolute;background:center/contain no-repeat;will-change:translate}
+.fly-large{left:78.77%;top:18.6%;width:16.93%;height:39.64%;background-image:var(--balloon-large);transform-origin:50% 20%;animation:float-a 11s ease-in-out infinite}
+.fly-small-top{left:91.51%;top:5.84%;width:6.04%;height:14.88%;background-image:var(--balloon-small);animation:float-b 8s ease-in-out -3s infinite}
+.fly-small-right{left:91.51%;top:48.88%;width:7.18%;height:17.32%;background-image:var(--balloon-small);animation:float-b 9.5s ease-in-out -6s infinite}
+.fly-tiny{left:8.61%;top:62.17%;width:2.09%;height:5.1%;background-image:var(--balloon-tiny);animation:float-c 14s ease-in-out infinite}
+.fly-plane-left{left:5.38%;top:53.77%;width:3.35%;height:3.19%;background-image:var(--plane);animation:glide-right 18s linear infinite}
+.fly-plane-right{left:93.06%;top:72.9%;width:3.65%;height:3.61%;background-image:var(--plane);scale:-1 1;animation:glide-left 22s linear -9s infinite}
+@keyframes float-a{0%,100%{translate:0 0;rotate:-.6deg}50%{translate:-1.5% -3.2%;rotate:.6deg}}
+@keyframes float-b{0%,100%{translate:0 0}50%{translate:3% -7%}}
+@keyframes float-c{0%,100%{translate:0 0}50%{translate:60% -18%}}
+@keyframes glide-right{0%{translate:-260% 110%;opacity:0}12%{opacity:1}50%{translate:0 0}88%{opacity:1}100%{translate:260% -130%;opacity:0}}
+@keyframes glide-left{0%{translate:260% 110%;opacity:0}12%{opacity:1}50%{translate:0 0}88%{opacity:1}100%{translate:-260% -130%;opacity:0}}
+@media(prefers-reduced-motion:reduce){.fly{animation:none}}
+
+/* The sky goes on down the page: drifters beside the features, a night sky in the price band, a bank of clouds before pricing, a sunset at the end */
+.feature-split>div:first-child{position:relative}
+.drift{position:absolute;inset:auto 0 0;height:96px}
+.drift-balloon{left:4%;bottom:6px;width:40px;height:55px;background-image:var(--balloon-small);animation:float-b 9s ease-in-out -2s infinite}
+.drift-plane{left:46%;top:18px;width:46px;height:24px;background-image:var(--plane);animation:glide-right 20s linear -6s infinite}
+.band-sky{position:absolute;z-index:-1;inset:0;background:linear-gradient(#221f5c80,#221f5c1a),url(/assets/hero/sky-dark.webp) center bottom/cover no-repeat}
+.band-balloon{right:max(2%,calc(50% - 700px));top:15%;width:64px;height:89px;background-image:url(/assets/hero/balloon-small-dark.webp);animation:float-b 9s ease-in-out infinite}
+.band-tiny{left:max(1.5%,calc(50% - 690px));bottom:20%;width:26px;height:36px;background-image:url(/assets/hero/balloon-tiny-dark.webp);animation:float-c 16s ease-in-out -5s infinite}
+.band-plane{left:40%;top:44px;width:44px;height:23px;background-image:url(/assets/hero/plane-dark.webp);animation:glide-right 24s linear -8s infinite}
+.clouds{height:clamp(120px,15vw,250px);background:var(--sky) center bottom/100% auto no-repeat;-webkit-mask-image:linear-gradient(transparent,#000 60%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 60%,#000 82%,transparent)}
+.closing-sky{position:absolute;z-index:-1;inset:0}
+.closing-large{right:5%;bottom:-52px;width:150px;height:198px;background-image:var(--balloon-large);transform-origin:50% 20%;animation:float-a 11s ease-in-out infinite}
+.closing-small{left:8%;top:18%;width:58px;height:80px;background-image:var(--balloon-small);animation:float-b 9s ease-in-out -4s infinite}
+.closing-plane{left:22%;bottom:22%;width:44px;height:23px;background-image:var(--plane);animation:glide-right 20s linear -3s infinite}
+@media(max-width:1320px){.band .fly{display:none}}
+@media(max-width:1100px){.drift,.closing .fly{display:none}}
+
+/* Dark mode: put these declarations in the rule that sets the dark tokens, for example :root[data-theme=dark] */
+:root[data-theme=dark]{--sky:url(/assets/hero/sky-dark.webp);--balloon-large:url(/assets/hero/balloon-large-dark.webp);--balloon-small:url(/assets/hero/balloon-small-dark.webp);--balloon-tiny:url(/assets/hero/balloon-tiny-dark.webp);--plane:url(/assets/hero/plane-dark.webp);}
